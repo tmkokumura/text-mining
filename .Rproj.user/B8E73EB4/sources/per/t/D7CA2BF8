@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1535689206844.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2480227183",
+    "id" : "D7CA2BF8",
+    "lastKnownWriteTime" : 1535716793,
+    "last_content_update" : 1535716793568,
+    "path" : "C:/Users/okumura.tomoki/RProject/text-mining/src/Chapter06.R",
+    "project_path" : "src/Chapter06.R",
+    "properties" : {
+        "cursorPosition" : "13,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
