@@ -1,0 +1,5 @@
+rvest
+dplyr
+magrittr
+RMeCab
+luzlogr
