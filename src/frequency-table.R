@@ -2,18 +2,23 @@ library(rvest)
 library(dplyr)
 library(magrittr)
 library(RMeCab)
-library(luzlogr)
+library(logging)
 
 source("src/scraping.R")
+source("src/util.R")
 
 # log settings
 FILE.THIS <- "frequency-table.R"
 FILE.LOG <- paste(c("log/", FILE.THIS, ".log"), collapse = "")
-LOG.DEBUG <- -1
-LOG.INFO <- 0
-LOG.WARN <- 1
-LOG.ERROR <- 2
-logfile <- openlog(FILE.LOG, loglevel = LOG.DEBUG, append = T)
+LOGGER = "main.logger"
+LEVEL = "DEBUG"
+formatter <- function(record) {
+  msg <- record$msg
+  timestamp <- record$timestamp
+  levelname <- record$levelname
+  sprintf("[%s][%s] %s", timestamp, levelname, msg)
+} 
+addHandler(writeToFile, formatter = formatter, logger = LOGGER, file = FILE.LOG, level = LEVEL)
 
 # scraping parameters
 URL <- "https://www.amazon.co.jp/%E3%83%8E%E3%83%AB%E3%82%A6%E3%82%A7%E3%82%A4%E3%81%AE%E6%A3%AE-%E4%B8%8A-%E8%AC%9B%E8%AB%87%E7%A4%BE%E6%96%87%E5%BA%AB-%E6%9D%91%E4%B8%8A-%E6%98%A5%E6%A8%B9/dp/4062748681/ref=sr_1_14?s=books&ie=UTF8&qid=1535732835&sr=1-14&keywords=%E6%9D%91%E4%B8%8A%E6%98%A5%E6%A8%B9"
@@ -36,36 +41,35 @@ COL.NM.FREQUENCY <- "FREQUENCY"
 COL.IDX.FREQUENCY <- DOC.DF.N + 3
 
 # main script --------------------------------------
-printlog("start [", FILE.THIS, "]")
+loginfo(concat("start [", FILE.THIS, "]"), logger = LOGGER)
 
 # read html
-printlog("reading :", URL, level = LOG.INFO)
+loginfo(concat("reading :", URL), logger = LOGGER)
 review <- getTextFromHtml(URL, SELECTOR)
-printlog(head(review, 10))
+logdebug(head(review, 10))
 
 # write review text
-printlog("writing :", FILE.REVIEW, level = LOG.INFO)
+loginfo(concat("writing :", FILE.REVIEW), logger = LOGGER)
 writeLines(review, FILE.REVIEW)
 
 # get frequency table
-printlog("reading :", FILE.REVIEW)
+loginfo(concat("reading :", FILE.REVIEW), logger = LOGGER)
 ft <- docDF(FILE.REVIEW, type = DOC.DF.TYPE, nDF = DOC.DF.NDF, N = DOC.DF.N ,pos = DOC.DF.POS1)
 names(ft)[COL.IDX.FREQUENCY] <- COL.NM.FREQUENCY
-printlog(head(ft, 10), level = LOG.DEBUG)
+logdebug(head(ft, 10), logger = LOGGER)
 
 # filterd by POS2
 if (!is.null(DOC.DF.POS2)) {
   ft %<>% filter(POS2 %in% DOC.DF.POS2)
-  printlog(head(ft, 10), level = LOG.DEBUG)
+  logdebug(head(ft, 10), logger = LOGGER)
 }
 
 # decreasing sort by frequency
 ft <- ft[order(ft$FREQUENCY, decreasing = T),]
-printlog(head(ft, 10), level = LOG.DEBUG)
+logdebug(head(ft, 10), logger = LOGGER)
 
 # write frequency table
-printlog("writing :", FILE.FREQUENCY.TABLE)
+loginfo(concat("writing :", FILE.FREQUENCY.TABLE), logger = LOGGER)
 write.table(ft, FILE.FREQUENCY.TABLE, quote = F, col.names = T, append = F)
 
-printlog("end [", FILE.THIS, "]", level = LOG.INFO)
-closelog(sessionInfo = F)
+loginfo(concat("end [", FILE.THIS, "]"), logger = LOGGER)
