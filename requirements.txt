@@ -2,4 +2,4 @@ rvest
 dplyr
 magrittr
 RMeCab
-luzlogr
+logging
