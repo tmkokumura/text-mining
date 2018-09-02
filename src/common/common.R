@@ -4,6 +4,7 @@ library(dplyr)
 library(magrittr)
 library(RMeCab)
 library(logging)
+library(igraph)
 
 # import utils ------------------------------
 source("src/util/character-util.R")
