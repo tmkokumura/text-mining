@@ -6,13 +6,12 @@ library(RMeCab)
 library(logging)
 
 # import utils ------------------------------
-source("src/scraping.R")
 source("src/util/character-util.R")
 
 # log setting -------------------------------
 logReset()
 
-LOG.FILE <- "rscript.log"  # log file name
+LOG.FILE <- "log/rscript.log"   # log file name
 LOGGER <- "main.logger"     # logger name
 LEVEL <- "DEBUG"            # log level
 
@@ -23,4 +22,6 @@ formatter <- function(record) {
   sprintf("[%s][%s] %s", timestamp, levelname, msg)
 }
 
-addHandler(writeToFile, formatter = formatter, logger = LOGGER, file = LOG.FILE, level = LEVEL)
+addHandler(writeToFile, formatter = formatter, file = LOG.FILE, level = LEVEL)
+addHandler(writeToConsole, formatter = formatter, level = LEVEL)
+setLevel(LEVEL)
