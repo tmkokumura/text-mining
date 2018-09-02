@@ -6,7 +6,7 @@ library(RMeCab)
 library(logging)
 
 # import utils ------------------------------
-source("src/func/scraping-func.R")
+source("src/scraping.R")
 source("src/util/character-util.R")
 
 # log setting -------------------------------
@@ -24,8 +24,3 @@ formatter <- function(record) {
 }
 
 addHandler(writeToFile, formatter = formatter, logger = LOGGER, file = LOG.FILE, level = LEVEL)
-
-# get command args -------------------------
-command.args <- commandArgs(trailingOnly=TRUE)
-func.name <- command.args[1]
-func.param <- command.args[2:length(command.args)]
