@@ -1,10 +1,10 @@
-# set working directory -------------
+# set working directory ----------------------------
 setwd("C:/Users/okumura.tomoki/RProject/text-mining/")
 
-# import common script -------------
+# import common script -----------------------------
 source("src/common/common.R")
 
-# main script ----------------------
+# define constant ----------------------------------
 # io file names
 FILE.REVIEW <- "data/review.txt"
 FILE.FREQUENCY.TABLE <- "data/frequency_table.csv"
@@ -20,6 +20,7 @@ DOC.DF.POS2 <- NULL
 # frequency table parameters
 COL.NM.FREQUENCY <- "FREQUENCY"
 COL.IDX.FREQUENCY <- DOC.DF.N + 3
+
 
 # main script --------------------------------------
 loginfo(concat("start [", "thisfile", "]"), logger = LOGGER)
