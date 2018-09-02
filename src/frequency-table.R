@@ -28,8 +28,8 @@ COL.IDX.FREQUENCY <- DOC.DF.N + 3
 loginfo(concat("start [", THIS.FILE, "]"))
 
 # get frequency table
-loginfo(concat("reading :", FILE.REVIEW))
-ft <- docDF(FILE.REVIEW, type = DOC.DF.TYPE, nDF = DOC.DF.NDF, N = DOC.DF.N ,pos = DOC.DF.POS1)
+loginfo(concat("reading :", REVIEW.FILE))
+ft <- docDF(REVIEW.FILE, type = DOC.DF.TYPE, nDF = DOC.DF.NDF, N = DOC.DF.N ,pos = DOC.DF.POS1)
 names(ft)[COL.IDX.FREQUENCY] <- COL.NM.FREQUENCY
 logdebug(head(ft, 10))
 
@@ -44,8 +44,8 @@ ft <- ft[order(ft$FREQUENCY, decreasing = T),]
 logdebug(head(ft, 10))
 
 # write frequency table
-loginfo(concat("writing :", FILE.FREQUENCY.TABLE))
-write.table(ft, FILE.FREQUENCY.TABLE, quote = F, col.names = T, append = F)
+loginfo(concat("writing :", FREQUENCY.TABLE.FILE))
+write.table(ft, FREQUENCY.TABLE.FILE, quote = F, col.names = T, append = F)
 
 loginfo(concat("end [", THIS.FILE, "]"))
 
